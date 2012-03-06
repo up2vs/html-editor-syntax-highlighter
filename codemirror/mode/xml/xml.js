@@ -31,6 +31,12 @@ CodeMirror.defineMode("xml", function(config, parserConfig) {
         }
         else return null;
       }
+      else if (stream.eat("{")){
+  	  	  if (stream.eat("*")){
+					return chain(inBlock("smarty-comment", "*}>"));
+			   }
+	          return chain(inBlock("smarty", "}>"));
+	    }
       else if (stream.eat("?")) {
         stream.eatWhile(/[\w\._\-]/);
         state.tokenize = inBlock("meta", "?>");
